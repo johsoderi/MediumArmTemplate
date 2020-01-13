@@ -1,0 +1,98 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "projectName": {
+      "type": "string"
+    },
+    "adminUsername": {
+      "type": "string"
+    },
+    "adminPassword": {
+      "type": "securestring"
+    },
+    "location": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]"
+    },
+    "adUserId": {
+      "type": "string"
+    }
+  },
+  "variables": {
+  },
+  "resources": [
+    {
+      "type": "Microsoft.KeyVault/vaults",
+      "name": "[concat(resourceGroup().name, 'Vault')]",
+      "location": "[parameters('location')]",
+      "apiVersion": "2018-02-14",
+      "properties": {
+        "enabledForDeployment": false,
+        "enabledForTemplateDeployment": true,
+        "enabledForDiskEncryption": false,
+        "accessPolicies": [
+          {
+            "objectId": "[parameters('adUserId')]",
+            "tenantId": "[subscription().tenantId]",
+            "permissions": {
+              "keys": ["Get","List","Update","Create","Import","Delete","Recover","Backup","Restore"],
+              "secrets": ["Get","List","Set","Delete","Recover","Backup","Restore"],
+              "certificates": ["Get","List","Update","Create","Import","Delete","Recover","Backup",
+                "Restore","ManageContacts","ManageIssuers","GetIssuers","ListIssuers","SetIssuers","DeleteIssuers"]
+            }
+          }
+        ],
+        "tenantId": "[subscription().tenantId]",
+        "sku": {
+          "name": "standard",
+          "family": "A"
+        }
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "name": "[concat(resourceGroup().name, 'Vault/adminPassword')]",
+      "apiVersion": "2016-10-01",
+      "location": "centralus",
+      "scale": null,
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', concat(resourceGroup().name, 'Vault'))]"
+      ],
+      "properties": {
+        "contentType": "securestring",
+        "value": "[parameters('adminPassword')]",
+        "attributes": {
+          "enabled": true
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2017-05-10",
+      "name": "[concat('serverTemplate', copyIndex(1))]",
+      "copy": {
+        "name": "servercopy",
+        "count": 2,
+        "mode": "serial"
+      },
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri":"https://pastebin.com/raw/sYjvEu2n",
+          "contentVersion":"1.0.0.0"
+        },
+        "parameters": {
+          "networkInterfaceName": {"value":"[concat('webServer', copyIndex(1), 'NetInterface')]"},
+          "publicIpAddressName": {"value":"[concat('webServer', copyIndex(1), 'PubIp')]"},
+          "virtualMachineName": {"value": "[concat('webServer', copyIndex(1))]"},
+          "adminUsername": {"value":"[parameters('adminUsername')]"},
+          "adminPassword": {"value":"[parameters('adminPassword')]"},
+          "projectName": {"value":"[parameters('projectName')]"}
+        }
+      }
+    }
+  ],
+  "outputs": {
+  }
+}

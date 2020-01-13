@@ -13,14 +13,14 @@ if ([string]::IsNullOrWhiteSpace($projectName)) { $projectName = "MediumARMtempl
 $loc = "North Europe"
 $rg = ($projectName + "RG")
 
-$adminUsername = Read-Host -Prompt "Choose a username for the server Administrator account [default: 'serveradmin']"
+$adminUsername = Read-Host -Prompt "Choose a username for the server Administrator accounts [default: 'serveradmin']"
 if ([string]::IsNullOrWhiteSpace($adminUsername)) { $adminUsername = "serveradmin" }
 
 #$adminPassword = Read-Host -Prompt ("Choose a password for " + $adminUsername) -AsSecureString
 # Lägg in alt. för generated pw! Testa om IsNullOrWhiteSpace funkar på securestr, annars släng in en switch typ?
 $generatedPw = [System.Web.Security.Membership]::GeneratePassword(25,10)
 $adminPassword = ConvertTo-SecureString -String $generatedPw -AsPlainText -Force
-Write-Output ("Generated secure password for " + $adminUsername + ". It will be stored in Azure Key Vault: : " + $rg + "/" + $rg + "Vault")
+Write-Output ("A secure password for '" + $adminUsername + "' was generated and will be stored in the following Azure Key Vault: : " + $rg + "/" + $rg + "Vault")
 
 Write-Output ("Attempting to delete Resource Group: " + $rg)
 az group delete -n $rg --yes

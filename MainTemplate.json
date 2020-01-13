@@ -79,7 +79,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri":"https://pastebin.com/raw/sYjvEu2n",
+          "uri":"https://raw.githubusercontent.com/johsoderi/MediumArmTemplate/master/ServerTemplate.json",
           "contentVersion":"1.0.0.0"
         },
         "parameters": {

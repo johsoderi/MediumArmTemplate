@@ -121,7 +121,7 @@
       },
       "resources": [
         {
-          "name": "[variables('blobContainerName')]",
+          "name": "[concat('default/', variables('blobContainerName'))]",
           "type": "blobServices/containers",
           "apiVersion": "2018-07-01",
           "dependsOn": [

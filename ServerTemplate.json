@@ -41,7 +41,7 @@
         },
         "virtualNetworkName": {
             "type": "string",
-            "defaultValue": "[concat(resourceGroup().name, '-vnet')]"
+            "defaultValue": "[concat(resourceGroup().name, 'Vnet')]"
         },
         "addressPrefixes": {
             "type": "array",

@@ -17,6 +17,10 @@
     },
     "adUserId": {
       "type": "string"
+    },
+    "storageAccountType": {
+      "type": "string",
+      "defaultValue": "Standard_LRS"
     }
   },
   "variables": {
@@ -36,10 +40,43 @@
             "objectId": "[parameters('adUserId')]",
             "tenantId": "[subscription().tenantId]",
             "permissions": {
-              "keys": ["Get","List","Update","Create","Import","Delete","Recover","Backup","Restore"],
-              "secrets": ["Get","List","Set","Delete","Recover","Backup","Restore"],
-              "certificates": ["Get","List","Update","Create","Import","Delete","Recover","Backup",
-                "Restore","ManageContacts","ManageIssuers","GetIssuers","ListIssuers","SetIssuers","DeleteIssuers"]
+              "keys": [
+                "Get",
+                "List",
+                "Update",
+                "Create",
+                "Import",
+                "Delete",
+                "Recover",
+                "Backup",
+                "Restore"
+              ],
+              "secrets": [
+                "Get",
+                "List",
+                "Set",
+                "Delete",
+                "Recover",
+                "Backup",
+                "Restore"
+              ],
+              "certificates": [
+                "Get",
+                "List",
+                "Update",
+                "Create",
+                "Import",
+                "Delete",
+                "Recover",
+                "Backup",
+                "Restore",
+                "ManageContacts",
+                "ManageIssuers",
+                "GetIssuers",
+                "ListIssuers",
+                "SetIssuers",
+                "DeleteIssuers"
+              ]
             }
           }
         ],
@@ -68,6 +105,30 @@
       }
     },
     {
+      "type": "Microsoft.Storage/storageAccounts",
+      "name": "[concat(resourceGroup().name, 'StorAcc')]",
+      "apiVersion": "2018-07-01",
+      "location": "[resourceGroup().location]",
+      "kind": "StorageV2",
+      "sku": {
+        "name": "Standard_LRS",
+        "tier": "Standard"
+      },
+      "properties": {
+        "accessTier": "Hot"
+      },
+      "resources": [
+        {
+          "name": "[concat('default/', resourceGroup().name, 'BlobCont')]",
+          "type": "blobServices/containers",
+          "apiVersion": "2018-07-01",
+          "dependsOn": [
+            "[concat(resourceGroup().name, 'StorAcc')]"
+          ]
+        }
+      ]
+    },
+    {
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2017-05-10",
       "name": "[concat('serverTemplate', copyIndex(1))]",
@@ -79,16 +140,28 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri":"https://raw.githubusercontent.com/johsoderi/MediumArmTemplate/master/ServerTemplate.json",
-          "contentVersion":"1.0.0.0"
+          "uri": "https://raw.githubusercontent.com/johsoderi/MediumArmTemplate/master/ServerTemplate.json",
+          "contentVersion": "1.0.0.0"
         },
         "parameters": {
-          "networkInterfaceName": {"value":"[concat('webServer', copyIndex(1), 'NetInterface')]"},
-          "publicIpAddressName": {"value":"[concat('webServer', copyIndex(1), 'PubIp')]"},
-          "virtualMachineName": {"value": "[concat('webServer', copyIndex(1))]"},
-          "adminUsername": {"value":"[parameters('adminUsername')]"},
-          "adminPassword": {"value":"[parameters('adminPassword')]"},
-          "projectName": {"value":"[parameters('projectName')]"}
+          "networkInterfaceName": {
+            "value": "[concat('webServer', copyIndex(1), 'NetInterface')]"
+          },
+          "publicIpAddressName": {
+            "value": "[concat('webServer', copyIndex(1), 'PubIp')]"
+          },
+          "virtualMachineName": {
+            "value": "[concat('webServer', copyIndex(1))]"
+          },
+          "adminUsername": {
+            "value": "[parameters('adminUsername')]"
+          },
+          "adminPassword": {
+            "value": "[parameters('adminPassword')]"
+          },
+          "projectName": {
+            "value": "[parameters('projectName')]"
+          }
         }
       }
     }

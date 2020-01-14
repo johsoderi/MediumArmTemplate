@@ -1,0 +1,23 @@
+Hejsan, ursäkta mina uteblivna uppdateringar! Det är hela tiden något "jag ska bara", får jobba på att bli bättre på att visa vad jag gör.
+
+Jag har iallafall knåpat vidare med mallar och fått dem att trycka ut ett par servrar åtminstone. Har testat mig fram och tragglat med massor av (för mig) obegripliga felmeddelanden, men fått en lite bättre förståelse för strukturen i Azure och vad vissa resurstyper handlar om. 
+Nu är väl mina mallar motsatsen till alla "best practice"-råd (angående återanvändning/modularisering), men jag lär mig under tiden och lovar att inte hårdkoda allt nästa gång :)
+
+Är det något annat du lägger märke till som är "big no-no" eller som jag missuppfattat helt?
+
+Jag har inga parameterfiler i nuläget, då jag märkte att man inte kan köra både inline-param. och fil samtidigt, och jag visste inte hur jag skulle få till namnen i den länkade mallen utan inline. Sen för MainTemplate kör jag med några PS-prompts istället för parameterfil, det känns smidigare när jag testar.
+
+
+Det jag har fått till hittills är iallafall att ARM spottar ur sig ett par servrar och 
+
+MediumARMtemplateNsg
+MediumARMtemplateRG-vnet
+MediumARMtemplateRGVault
+webServer1
+webServer1_disk1_56f2478de8944af8a611aab179f4a76b
+webServer1NetInterface
+webServer1PubIp
+webServer2
+webServer2_disk1_8fab8500d0df4c1aaa2bfa4d1059cd95
+webServer2NetInterface
+webServer2PubIp

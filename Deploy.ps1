@@ -11,13 +11,12 @@ if ([string]::IsNullOrWhiteSpace($projectName)) { $projectName = "MediumARMtempl
 #   Resource Group: Only alphanumeric characters, periods, underscores, hyphens, and parenthesis. Up to 90 characters.
 
 $loc = "North Europe"
-$rg = ($projectName + "RG")
+$rg = ($projectName + "Rg")
 
 $adminUsername = Read-Host -Prompt "Choose a username for the server Administrator accounts [default: 'serveradmin']"
 if ([string]::IsNullOrWhiteSpace($adminUsername)) { $adminUsername = "serveradmin" }
 
 #$adminPassword = Read-Host -Prompt ("Choose a password for " + $adminUsername) -AsSecureString
-# Lägg in alt. för generated pw! Testa om IsNullOrWhiteSpace funkar på securestr, annars släng in en switch typ?
 $generatedPw = [System.Web.Security.Membership]::GeneratePassword(25,10)
 $adminPassword = ConvertTo-SecureString -String $generatedPw -AsPlainText -Force
 Write-Output ("A secure password for '" + $adminUsername + "' was generated and will be stored in the following Azure Key Vault: : " + $rg + "/" + $rg + "Vault")
@@ -34,6 +33,6 @@ Write-Output ("Running MainTemplate.json...")
 # az group deployment create --name "$projectName" --resource-group "$rg" --template-file ~/Documents/MediumArmTemplate/MainTemplate.json `
 #   --parameters adminPassword=$adminPassword adUserId=$adUserId projectName=$projectName
 # Ovan fuckar upp securestring på nåt sätt, bytte till New-AzResourceGroupDeployment:
-New-AzResourceGroupDeployment -DeploymentDebugLogLevel All -ResourceGroupName $rg -TemplateFile ~/Documents/MediumArmTemplate/MainTemplate.json `
+New-AzResourceGroupDeployment -DeploymentDebugLogLevel All -ResourceGroupName $rg `
+    -TemplateUri https://raw.githubusercontent.com/johsoderi/MediumArmTemplate/master/MainTemplate.json `
     -adminPassword $adminPassword -adminUsername $adminUsername -adUserId $adUserId -projectName $projectName
-# Skapa en repo och byt sen till -templateUri "https://raw.githubusercontent.com/.../MainTemplate.json"

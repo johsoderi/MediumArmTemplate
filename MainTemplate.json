@@ -106,7 +106,7 @@
     },
     {
       "type": "Microsoft.Storage/storageAccounts",
-      "name": "[concat(resourceGroup().name, 'StorAcc')]",
+      "name": "[toLower(concat(resourceGroup().name, 'StorAcc'))]",
       "apiVersion": "2018-07-01",
       "location": "[resourceGroup().location]",
       "kind": "StorageV2",

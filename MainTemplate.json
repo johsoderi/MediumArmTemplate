@@ -106,12 +106,12 @@
     },
     {
       "type": "Microsoft.Storage/storageAccounts",
-      "name": "[toLower(concat(resourceGroup().name, 'StorAcc'))]",
+      "name": "[toLower(concat('default/', substring(resourceGroup().name, 0, 18), 'StAcc'))]",
       "apiVersion": "2018-07-01",
       "location": "[resourceGroup().location]",
       "kind": "StorageV2",
       "sku": {
-        "name": "Standard_LRS",
+        "name": "[parameters('storageAccountType')]",
         "tier": "Standard"
       },
       "properties": {
@@ -119,7 +119,7 @@
       },
       "resources": [
         {
-          "name": "[concat('default/', resourceGroup().name, 'BlobCont')]",
+          "name": "[toLower(concat('default/', substring(resourceGroup().name, 0, 18), 'blobs'))]",
           "type": "blobServices/containers",
           "apiVersion": "2018-07-01",
           "dependsOn": [

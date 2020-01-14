@@ -106,7 +106,7 @@
     },
     {
       "type": "Microsoft.Storage/storageAccounts",
-      "name": "[toLower(concat('default/', substring(resourceGroup().name, 0, 18), 'StAcc'))]",
+      "name": "[toLower(concat(substring(resourceGroup().name, 0, 18), 'StAcc'))]",
       "apiVersion": "2018-07-01",
       "location": "[resourceGroup().location]",
       "kind": "StorageV2",
@@ -119,7 +119,7 @@
       },
       "resources": [
         {
-          "name": "[toLower(concat('default/', substring(resourceGroup().name, 0, 18), 'blobs'))]",
+          "name": "[toLower(concat(substring(resourceGroup().name, 0, 18), 'blobs'))]",
           "type": "blobServices/containers",
           "apiVersion": "2018-07-01",
           "dependsOn": [

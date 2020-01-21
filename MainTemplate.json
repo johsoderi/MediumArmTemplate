@@ -164,7 +164,7 @@
         "[variables('virtualNetworkName')]",
         "[variables('loadBalancerName')]",
         "[variables('availabilitySetName')]",
-        "[variables('storageAccountName')]"
+        "[resourceId('Microsoft.Storage/storageAccounts', variabels('storageAccountName') )]",
       ],
       "properties": {
         "mode": "Incremental",

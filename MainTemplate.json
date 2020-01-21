@@ -200,6 +200,9 @@
           "storageAccountName": {
             "value": "[variables('storageAccountName')]"
           },
+          "subnetName": {
+            "value": "[variables('subnetName')]"
+          },
           "availabilitySetName": {
             "value": "[variables('storageAccountName')]"
           }

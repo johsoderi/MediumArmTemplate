@@ -41,7 +41,8 @@
     "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('subnetName'))]",
     "availabilitySetName": "AvSet",
     "storageAccountType": "Standard_LRS",
-    "storageAccountName": "[uniqueString(resourceGroup().id)]",
+    // "storageAccountName": "[uniqueString(resourceGroup().id)]",
+    "storageAccountName": "storageee",
     "virtualNetworkName": "vNet",
     "subnetName": "backendSubnet",
     "loadBalancerName": "[concat(resourceGroup().name, 'Lb')]"

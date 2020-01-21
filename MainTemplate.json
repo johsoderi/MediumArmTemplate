@@ -31,7 +31,11 @@
     "vmSize": {
       "type": "string",
       "defaultValue": "Standard_B1ls"
+    },
+    "adUserId": {
+      "type": "string"
     }
+
   },
   "variables": {
     "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('subnetName'))]",

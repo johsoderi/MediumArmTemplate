@@ -194,11 +194,8 @@
           "projectName": {
             "value": "[parameters('projectName')]"
           },
-          "loadBalamcerName": {
+          "loadBalancerName": {
             "value": "[variables('loadBalancerName')]"
-          },
-          "subnetRef": {
-            "value": "[variables('subnetRef')]"
           },
           "storageAccountName": {
             "value": "[variables('storageAccountName')]"

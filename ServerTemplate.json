@@ -29,6 +29,9 @@
         "storageAccountName": {
             "type": "string"
         },
+        "projectName": {
+            "type": "string"
+        },
         "adminUsername": {
             "type": "string"
         },

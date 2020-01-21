@@ -163,8 +163,8 @@
       "dependsOn": [
         "[variables('virtualNetworkName')]",
         "[variables('loadBalancerName')]",
-        "[variables('availabilitySetName')]"
-        //"[variables('storageAccountName')]"
+        "[variables('availabilitySetName')]",
+        "[variables('storageAccountName')]"
       ],
       "properties": {
         "mode": "Incremental",
@@ -204,7 +204,7 @@
             "value": "[variables('subnetName')]"
           },
           "availabilitySetName": {
-            "value": "[variables('storageAccountName')]"
+            "value": "[variables('availabilitySetName')]"
           }
 
         }

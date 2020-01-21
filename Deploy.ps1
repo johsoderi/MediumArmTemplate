@@ -3,7 +3,7 @@ if ([string]::IsNullOrWhiteSpace($principalName)) { $principalName = "joso1801@n
 
 az login -u $principalName
 
-#$adUserId = (Get-AzADUser -UserPrincipalName $principalName).Id
+$adUserId = (Get-AzADUser -UserPrincipalName $principalName).Id
 
 $projectName = Read-Host -Prompt "Deployment name [default: 'MediumARMtemplate']"
 if ([string]::IsNullOrWhiteSpace($projectName)) { $projectName = "MediumARMtemplate" }
@@ -35,5 +35,4 @@ Write-Output ("Running MainTemplate.json...")
 # Ovan fuckar upp securestring på nåt sätt, bytte till New-AzResourceGroupDeployment:
 New-AzResourceGroupDeployment -DeploymentDebugLogLevel All -ResourceGroupName $rg `
     -TemplateUri https://raw.githubusercontent.com/johsoderi/MediumArmTemplate/master/MainTemplate.json `
-    -adminPassword $adminPassword -adminUsername $adminUsername -projectName $projectName
-#-adUserId $adUserId 
+    -adminPassword $adminPassword -adminUsername $adminUsername -adUserId $adUserId -projectName $projectName

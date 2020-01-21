@@ -205,6 +205,9 @@
           },
           "availabilitySetName": {
             "value": "[variables('availabilitySetName')]"
+          },
+          "adUserId": {
+            "value": "[parameters('projectName')]"
           }
 
         }

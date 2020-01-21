@@ -4,6 +4,7 @@ if ([string]::IsNullOrWhiteSpace($principalName)) { $principalName = "joso1801@n
 az login -u $principalName
 
 $adUserId = (Get-AzADUser -UserPrincipalName $principalName).Id
+$adUserId
 
 $projectName = Read-Host -Prompt "Deployment name [default: 'MediumARMtemplate']"
 if ([string]::IsNullOrWhiteSpace($projectName)) { $projectName = "MediumARMtemplate" }

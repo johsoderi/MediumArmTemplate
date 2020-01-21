@@ -130,5 +130,11 @@
                 }
             }
         }
-    ]
+    ],
+    "outputs": {
+        "adUserId": {
+            "type": "string",
+            "value": "[parameters('adUserId')]"
+        }
+    }
 }

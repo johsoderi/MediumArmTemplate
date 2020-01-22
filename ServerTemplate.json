@@ -87,6 +87,9 @@
             "type": "Microsoft.Compute/virtualMachines",
             "name": "[parameters('virtualMachineName')]",
             "location": "[parameters('location')]",
+            "dependsOn": [
+                "[parameters('networkInterfaceName')]"
+            ],
             "properties": {
                 "availabilitySet": {
                     "id": "[resourceId('Microsoft.Compute/availabilitySets', parameters('availabilitySetName'))]"

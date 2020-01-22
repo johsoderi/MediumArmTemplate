@@ -35,6 +35,6 @@ Write-Output ("Running MainTemplate.json...")
 # az group deployment create --name "$projectName" --resource-group "$rg" --template-file ~/Documents/MediumArmTemplate/MainTemplate.json `
 #   --parameters adminPassword=$adminPassword adUserId=$adUserId projectName=$projectName
 # Ovan fuckar upp securestring på nåt sätt, bytte till New-AzResourceGroupDeployment:
-New-AzResourceGroupDeployment -DeploymentDebugLogLevel All -Debug -ResourceGroupName $rg `
+New-AzResourceGroupDeployment -DeploymentDebugLogLevel All -ResourceGroupName $rg `
     -TemplateUri https://raw.githubusercontent.com/johsoderi/MediumArmTemplate/master/MainTemplate.json `
     -adminPassword $adminPassword -adminUsername $adminUsername -adUserId $adUserId -projectName $projectName

@@ -64,8 +64,8 @@
       "location": "[parameters('location')]",
       "name": "[variables('availabilitySetName')]",
       "properties": {
-        //"PlatformUpdateDomainCount": 2,
-        //"PlatformFaultDomainCount": 2
+        "PlatformUpdateDomainCount": 2,
+        "PlatformFaultDomainCount": 2
       },
       "sku": {
         "name": "Aligned"

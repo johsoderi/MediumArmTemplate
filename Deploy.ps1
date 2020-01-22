@@ -18,8 +18,8 @@ $adminUsername = Read-Host -Prompt "Choose a username for the server Administrat
 if ([string]::IsNullOrWhiteSpace($adminUsername)) { $adminUsername = "serveradmin" }
 
 #$adminPassword = Read-Host -Prompt ("Choose a password for " + $adminUsername) -AsSecureString
-#$generatedPw = [System.Web.Security.Membership]::GeneratePassword(25,10)
-$generatedPw = "testpw"
+$generatedPw = [System.Web.Security.Membership]::GeneratePassword(25,10)
+#$generatedPw = "testpw"
 $adminPassword = ConvertTo-SecureString -String $generatedPw -AsPlainText -Force
 Write-Output ("A secure password for '" + $adminUsername + "' was generated and will be stored in the following Azure Key Vault: : " + $rg + "/" + $rg + "Vault")
 

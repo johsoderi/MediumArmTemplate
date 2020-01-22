@@ -22,9 +22,9 @@ $generatedPw = [System.Web.Security.Membership]::GeneratePassword(25,10)
 $adminPassword = ConvertTo-SecureString -String $generatedPw -AsPlainText -Force
 Write-Output ("A secure password for '" + $adminUsername + "' was generated and will be stored in the following Azure Key Vault: : " + $rg + "/" + $rg + "Vault")
 
-Write-Output ("Attempting to delete Resource Group: " + $rg)
-az group delete -n $rg --yes
-Write-Output ("Done.")
+# Write-Output ("Attempting to delete Resource Group: " + $rg)
+# az group delete -n $rg --yes
+# Write-Output ("Done.")
 
 Write-Output ("Creating Resource Group: " + $rg)
 az group create -l $loc -n $rg

@@ -39,13 +39,13 @@
   },
   "variables": {
     "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('subnetName'))]",
-    "availabilitySetName": "AvSet",
+    "availabilitySetName": "[concat(parameters('projectName'), 'AvSet')]",
     "storageAccountType": "Standard_LRS",
     "storageAccountName": "[uniqueString(resourceGroup().id)]",
     //"storageAccountName": "storageee",
-    "virtualNetworkName": "vNet",
+    "virtualNetworkName": "[concat(parameters('projectName'), 'VNet')]",
     "subnetName": "backendSubnet",
-    "loadBalancerName": "[concat(resourceGroup().name, 'Lb')]"
+    "loadBalancerName": "[concat(parameters('projectName'), 'Lb')]"
   },
   "resources": [
     {

@@ -47,8 +47,6 @@
         "adUserId": {
             "type": "string"
         }
-
-
     },
 
     "variables": {
@@ -115,7 +113,7 @@
                 "networkProfile": {
                     "networkInterfaces": [
                         {
-                            "id": "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('networkInterfaceName'), copyindex()))]"
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaceName'))]"
                         }
                     ]
                 }
@@ -126,6 +124,14 @@
         "adUserId": {
             "type": "string",
             "value": "[parameters('adUserId')]"
+        },
+        "storageAccountName": {
+            "type": "string",
+            "value": "[parameters('storageAccountName')]"
+        },
+        "projectName": {
+            "type": "string",
+            "value": "[parameters('projectName')]"
         }
     }
 }

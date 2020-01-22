@@ -42,10 +42,10 @@
     "availabilitySetName": "[concat(parameters('projectName'), 'AvSet')]",
     "storageAccountType": "Standard_LRS",
     "storageAccountName": "[uniqueString(resourceGroup().id)]",
-    //"storageAccountName": "storageee",
     "virtualNetworkName": "[concat(parameters('projectName'), 'VNet')]",
     "subnetName": "backendSubnet",
-    "loadBalancerName": "[concat(parameters('projectName'), 'Lb')]"
+    "loadBalancerName": "[concat(parameters('projectName'), 'Lb')]",
+    "publicIpAddressName": "[concat(parameters('projectName'), 'PubIp')]"
   },
   "resources": [
     {
@@ -98,7 +98,8 @@
       "name": "[variables('loadBalancerName')]",
       "location": "[parameters('location')]",
       "dependsOn": [
-        "[variables('virtualNetworkName')]"
+        "[variables('virtualNetworkName')]",
+        "[concat('Microsoft.Network/publicIPAddresses/', variables('publicIpAddressName'))]"
       ],
       "properties": {
         "frontendIPConfigurations": [
@@ -107,8 +108,9 @@
               "subnet": {
                 "id": "[variables('subnetRef')]"
               },
-              "privateIPAddress": "10.0.2.6",
-              "privateIPAllocationMethod": "Static"
+              "publicIPAddress": {
+                "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('publicIpAddressName'))]"
+              }
             },
             "name": "LoadBalancerFrontend"
           }
@@ -151,6 +153,21 @@
         ]
       }
     },
+    {
+      "apiVersion": "2019-02-01",
+      "type": "Microsoft.Network/publicIPAddresses",
+      "name": "[variables('publicIpAddressName')]",
+      "location": "[parameters('location')]",
+      "sku": {
+        "name": "Basic"
+      },
+      "tags": {
+      },
+      "properties": {
+        "publicIPAllocationMethod": "Static",
+        "publicIPAddressVersion": "IPv4"
+      }
+    },
 
     {
       "type": "Microsoft.Resources/deployments",
@@ -166,7 +183,6 @@
         "[variables('loadBalancerName')]",
         "[variables('availabilitySetName')]",
         "[variables('storageAccountName')]"
-        //"[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName') )]"
       ],
       "properties": {
         "mode": "Incremental",

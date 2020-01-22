@@ -45,7 +45,8 @@
     "virtualNetworkName": "[concat(parameters('projectName'), 'VNet')]",
     "subnetName": "backendSubnet",
     "loadBalancerName": "[concat(parameters('projectName'), 'Lb')]",
-    "publicIpAddressName": "[concat(parameters('projectName'), 'PubIp')]"
+    "publicIpAddressName": "[concat(parameters('projectName'), 'PubIp')]",
+    "keyVaultName": "[concat(parameters('projectName'), 'Vault')]"
   },
   "resources": [
     {
@@ -225,6 +226,84 @@
             "value": "[parameters('adUserId')]"
           }
 
+        }
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults",
+      "name": "[variables('keyVaultName')]",
+      "location": "[parameters('location')]",
+      "apiVersion": "2018-02-14",
+      "properties": {
+        "enabledForDeployment": false,
+        "enabledForTemplateDeployment": true,
+        "enabledForDiskEncryption": false,
+        "accessPolicies": [
+          {
+            "objectId": "[parameters('adUserId')]",
+            "tenantId": "[subscription().tenantId]",
+            "permissions": {
+              "keys": [
+                "Get",
+                "List",
+                "Update",
+                "Create",
+                "Import",
+                "Delete",
+                "Recover",
+                "Backup",
+                "Restore"
+              ],
+              "secrets": [
+                "Get",
+                "List",
+                "Set",
+                "Delete",
+                "Recover",
+                "Backup",
+                "Restore"
+              ],
+              "certificates": [
+                "Get",
+                "List",
+                "Update",
+                "Create",
+                "Import",
+                "Delete",
+                "Recover",
+                "Backup",
+                "Restore",
+                "ManageContacts",
+                "ManageIssuers",
+                "GetIssuers",
+                "ListIssuers",
+                "SetIssuers",
+                "DeleteIssuers"
+              ]
+            }
+          }
+        ],
+        "tenantId": "[subscription().tenantId]",
+        "sku": {
+          "name": "standard",
+          "family": "A"
+        }
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "name": "[concat(variables('keyVaultName'), '/adminPassword')]",
+      "apiVersion": "2016-10-01",
+      "location": "centralus",
+      "scale": null,
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', variables('keyVaultName'))]"
+      ],
+      "properties": {
+        "contentType": "securestring",
+        "value": "[parameters('adminPassword')]",
+        "attributes": {
+          "enabled": true
         }
       }
     }

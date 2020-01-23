@@ -46,6 +46,13 @@
         },
         "adUserId": {
             "type": "string"
+        },
+        "_artifactsLocation": {
+            "type": "string",
+            "defaultValue": "https://raw.githubusercontent.com/johsoderi/MediumArmTemplate/master/",
+            "metadata": {
+                "description": "The base URI where artifacts required by this template are located. "
+            }
         }
     },
 
@@ -55,6 +62,27 @@
     },
 
     "resources": [
+         {
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "name": "[concat(parameters('virtualMachineName'),'/newuserscript')]",
+      "apiVersion": "2015-05-01-preview",
+      "location": "[parameters('location')]",
+      "dependsOn": [
+        "[concat('Microsoft.Compute/virtualMachines/', parameters('virtualMachineName'))]"
+      ],
+      "properties": {
+        "publisher": "Microsoft.Azure.Extensions",
+        "type": "CustomScript",
+        "typeHandlerVersion": "2.0",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+          "fileUris": [
+            "[uri(parameters('_artifactsLocation'), concat('apache_', parameters('virtualMachineName'), '.sh'))]"
+          ],
+          "commandToExecute": "sh install_apache.sh"
+        }
+      }
+    },
         {
             "apiVersion": "2018-04-01",
             "type": "Microsoft.Network/networkInterfaces",

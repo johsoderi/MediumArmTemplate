@@ -58,7 +58,8 @@
 
     "variables": {
         "lbID": "[resourceId('Microsoft.Network/loadBalancers', parameters('loadBalancerName'))]",
-        "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('subnetName'))]"
+        "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('subnetName'))]",
+        "uritest": "[uri(parameters('_artifactsLocation'), concat('apache_', parameters('virtualMachineName'), '.sh') )]"
     },
 
     "resources": [
@@ -163,6 +164,10 @@
         "projectName": {
             "type": "string",
             "value": "[parameters('projectName')]"
+        },
+        "uritest": {
+            "type": "string",
+            "value": "[variables('uritest')]"
         }
     }
 }

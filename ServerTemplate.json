@@ -79,7 +79,7 @@
                 "settings": {
                     "fileUris": [
                         //"[uri(parameters('_artifactsLocation'), concat('apache_', parameters('virtualMachineName'), '.sh') )]",
-                        "https://raw.githubusercontent.com/johsoderi/MediumArmTemplate/master/apache_webServer1.sh"
+                        "http://raw.githubusercontent.com/johsoderi/MediumArmTemplate/master/apache_webServer1.sh"
                         //" apache_webServer1.sh "
                     ],
                     "commandToExecute": "sh install_apache.sh"

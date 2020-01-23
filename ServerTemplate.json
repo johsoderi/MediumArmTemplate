@@ -1,6 +1,6 @@
 {
     "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-    "contentVersion": "1.0.0.0",
+    "contentVersion": "1.0.1.1",
 
     "parameters": {
 
@@ -79,10 +79,7 @@
                 "settings": {
                     "fileUris": [
                         "[uri(parameters('_artifactsLocation'), concat('apache_', parameters('virtualMachineName'), '.sh') )]"
-                        //"http://raw.githubusercontent.com/johsoderi/MediumArmTemplate/master/apache_webServer1.sh"
-                        //" apache_webServer1.sh "
                     ],
-                    //"commandToExecute": "sh install_apache.sh"
                     "commandToExecute": "[concat('sh apache_', parameters('virtualMachineName'), '.sh')]"
                 }
             }
@@ -111,9 +108,6 @@
                 ]
             }
         },
-
-
-
         {
             "apiVersion": "2018-04-01",
             "type": "Microsoft.Compute/virtualMachines",

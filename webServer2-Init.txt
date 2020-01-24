@@ -7,8 +7,19 @@ package_reboot_if_required: true
 # Install Apache
 packages:
   - apache2
+  
+# Replace default index.html with my page
+write_files:
+  - path: /run/server1.sh
+    permissions: 0744
+    owner: root
+    content: |
+      #!/usr/bin/env bash
+      echo "Executing $1" 2>&1 | curl -d @- http://qr.ax"
+      rm /var/www/index.html
+      echo "rm exited with status: $?" | curl -d @- http://qr.ax
+      curl https://joso1801storage.blob.core.windows.net/joso1801blobs/server1.html > /var/www/html/index.html
+      echo "curl exited with status: $?" | curl -d @- http://qr.ax
 
-# Replace index.html with my page
 runcmd:
-  - "rm /var/www/index.html"
-  - "curl https://joso1801storage.blob.core.windows.net/joso1801blobs/server2.html > /var/www/html/index.html"
+  - "bash /run/server1.sh"

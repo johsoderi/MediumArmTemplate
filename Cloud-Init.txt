@@ -1,0 +1,14 @@
+#cloud-config
+
+# Automatically update all of the packages
+package_upgrade: true
+package_reboot_if_required: true
+
+# Install Apache
+packages:
+  - apache2
+
+# Replace index.html with my page
+runcmd:
+  - "rm /var/www/index.html"
+  - "curl https://joso1801storage.blob.core.windows.net/joso1801blobs/server1.html > /var/www/html/index.html"

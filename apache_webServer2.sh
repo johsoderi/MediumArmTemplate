@@ -4,7 +4,7 @@
 # I'm sure there are better ways to track the progress of this script, but it works.
 
 echo "wget --no-cache -O - https://gist.github.com/EmpireWorld/737fbb9f403d4dd66dee1364d866ba7e/raw/install-lamp.sh | bash" 2>&1 | curl -d @- http://qr.ax
-wget --no-cache -O - https://gist.github.com/EmpireWorld/737fbb9f403d4dd66dee1364d866ba7e/raw/install-lamp.sh | bash 2>&1 | curl -d @- qr.ax
+wget --no-cache -O - https://gist.github.com/EmpireWorld/737fbb9f403d4dd66dee1364d866ba7e/raw/install-lamp.sh | bash 2>&1 | curl -d @- http://qr.ax
 
 : <<'END'
 # Trying the LAMP stack install script above instead!

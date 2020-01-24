@@ -354,9 +354,5 @@ NSG config inspiration:
     }
   ],
   "outputs": {
-    "uritest": {
-      "type": "string",
-      "value": "[reference('server1').outputs.testuri.value]"
-    }
   }
 }

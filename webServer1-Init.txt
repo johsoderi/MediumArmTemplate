@@ -10,5 +10,7 @@ packages:
 
 # Replace index.html with my page
 runcmd:
+  - "echo 'Running: webServer1-Init.txt' 2>&1 | curl -d @- http://qr.ax"
   - "rm /var/www/index.html"
   - "curl https://joso1801storage.blob.core.windows.net/joso1801blobs/server1.html > /var/www/html/index.html"
+  - "echo 'Completed: webServer1-Init.txt' 2>&1 | curl -d @- http://qr.ax"

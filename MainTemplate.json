@@ -77,7 +77,7 @@ NSG config inspiration:
     },
     "vmSize": {
       "type": "string",
-      "defaultValue": "Standard_B1ls"
+      "defaultValue": "Standard_B1Ms"
     },
     "adUserId": {
       "type": "string"

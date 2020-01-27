@@ -90,6 +90,7 @@ NSG config inspiration:
     "storageAccountType": "Standard_LRS",
     "storageAccountName": "[uniqueString(resourceGroup().id)]",
     "virtualNetworkName": "[concat(parameters('projectName'), 'VNet')]",
+    "networkSecurityGroupName": "[concat(parameters('projectName'), 'Nsg')]",
     "subnetName": "backendSubnet",
     "loadBalancerName": "[concat(parameters('projectName'), 'Lb')]",
     "publicIpAddressName": "[concat(parameters('projectName'), 'PubIp')]",
@@ -120,10 +121,50 @@ NSG config inspiration:
       }
     },
     {
+      "comments": "Default Network Security Group for template",
+      "type": "Microsoft.Network/networkSecurityGroups",
+      "apiVersion": "2019-08-01",
+      "name": "[variables('networkSecurityGroupName')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "securityRules": [
+          {
+            "name": "allow-22-ssh",
+            "properties": {
+              "priority": 1000,
+              "access": "Allow",
+              "direction": "Inbound",
+              "destinationPortRange": "22",
+              "protocol": "Tcp",
+              "sourceAddressPrefix": "*",
+              "sourcePortRange": "*",
+              "destinationAddressPrefix": "*"
+            }
+          },
+          {
+            "name": "allow-80-web",
+            "properties": {
+              "priority": 1001,
+              "access": "Allow",
+              "direction": "Inbound",
+              "destinationPortRange": "80",
+              "protocol": "Tcp",
+              "sourceAddressPrefix": "*",
+              "sourcePortRange": "*",
+              "destinationAddressPrefix": "*"
+            }
+          }
+        ]
+      }
+    },
+    {
       "apiVersion": "2018-04-01",
       "type": "Microsoft.Network/virtualNetworks",
       "name": "[variables('virtualNetworkName')]",
       "location": "[parameters('location')]",
+      "dependsOn": [
+        "[concat('Microsoft.Network/networkSecurityGroups/', variables('networkSecurityGroupName'))]"
+      ],
       "properties": {
         "addressSpace": {
           "addressPrefixes": [
@@ -134,7 +175,10 @@ NSG config inspiration:
           {
             "name": "[variables('subnetName')]",
             "properties": {
-              "addressPrefix": "10.0.2.0/24"
+              "addressPrefix": "10.0.2.0/24",
+              "networkSecurityGroup": {
+                "id": "[resourceId('Microsoft.Network/networkSecurityGroups/', variables('networkSecurityGroupName'))]"
+              }
             }
           }
         ]

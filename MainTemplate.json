@@ -45,7 +45,6 @@ NSG config inspiration:
       }
     }
 
-
 */
 
   "parameters": {
@@ -73,7 +72,7 @@ NSG config inspiration:
     },
     "numberOfInstances": {
       "type": "int",
-      "defaultValue": 2
+      "defaultValue": 3
     },
     "vmSize": {
       "type": "string",
